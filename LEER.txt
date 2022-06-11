@@ -1,0 +1,2 @@
+El archivo ejecutable esta en la carpeta dist
+Para probar el programa utilizar codigo correcto y para confirmar que marca los errores utilizar el codigo erroneo

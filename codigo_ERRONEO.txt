@@ -1,0 +1,20 @@
+#ESTO ES UN COMENTARIO EN EL LENGUAJE R
+
+#Hacemos uso del ciclo for con su
+#respectiva sintaxis similar a Python
+for(i in 1:10){
+    #Imprimimos la variable i
+    print(i)
+    
+    #Hacemos uso de condicionales IF
+    if(i<5){
+        print("menor")
+    }else{
+        print("mayor")
+    }
+}
+d=0
+while(d<=10){
+    print("hola")
+    d++
+}

@@ -1,0 +1,86 @@
+package codigo;
+
+import java_cup.runtime.Symbol;
+
+parser code
+{:
+    private Symbol s;
+    
+    public void syntax_error(Symbol s){
+        this.s = s;
+    }
+
+    public Symbol getS(){
+        return this.s;
+}
+:};
+
+terminal Linea, Comillas, Print, If, Else, Do, While, For,
+    Igual, Suma, Resta, Multiplicacion, Division, Op_logico, Op_relacional,
+    Op_atribucion, Op_booleano, Parentesis_a, Parentesis_c,
+    Llave_a, Llave_c, Corchete_a, Corchete_c, P_coma, Identificador,
+    Numero, Conector, In, ERROR;
+non terminal INICIO, SENTENCIA, DECLARACION, DECLARACION_FOR, IF, IF_ELSE,
+    WHILE, DO_WHILE, FOR, SENTENCIA_BOOLEANA, SENTENCIA_FOR;
+
+start with INICIO;
+
+INICIO ::= SENTENCIA
+;
+SENTENCIA ::= 
+    SENTENCIA DECLARACION |
+    DECLARACION |
+    SENTENCIA IF | 
+    IF |
+    SENTENCIA IF_ELSE |
+    IF_ELSE |
+    SENTENCIA WHILE |
+    WHILE |
+    SENTENCIA DO_WHILE
+    DO_WHILE |
+    SENTENCIA FOR |
+    FOR
+;
+DECLARACION ::= 
+    Identificador Igual Comillas Identificador Comillas | /*Crea una variable de Texto*/
+    Identificador Igual Numero | /*Crea una variable numerica*/
+    Print Parentesis_a Comillas Identificador Comillas Parentesis_c| /*Permite imprimir Texto*/
+    Print Parentesis_a Numero Parentesis_c|
+    Print Parentesis_a Identificador Parentesis_c|
+    Identificador Op_atribucion Numero |
+    Identificador Igual Identificador Suma Numero |
+    Identificador Op_atribucion Comillas Comillas P_coma |
+    Identificador Igual Comillas Comillas P_coma |
+    Identificador Op_atribucion Comillas Identificador Comillas P_coma |
+    Identificador Igual Comillas Identificador Comillas P_coma
+;
+IF ::= If Parentesis_a SENTENCIA_BOOLEANA Parentesis_c Llave_a SENTENCIA Llave_c
+;
+SENTENCIA_BOOLEANA ::= 
+    Op_booleano | 
+    Identificador Op_relacional Op_booleano |
+    Identificador Op_relacional Numero |
+    Identificador Op_relacional Identificador |
+    Identificador Op_relacional Comillas Comillas |
+    Identificador Op_relacional Comillas Identificador Comillas
+;
+IF_ELSE ::= If Parentesis_a SENTENCIA_BOOLEANA Parentesis_c Llave_a SENTENCIA Llave_c Else Llave_a SENTENCIA Llave_c
+;
+WHILE ::= While Parentesis_a SENTENCIA_BOOLEANA Parentesis_c Llave_a SENTENCIA Llave_c
+;
+DO_WHILE ::= Do Llave_a SENTENCIA Llave_c While Parentesis_a SENTENCIA_BOOLEANA Parentesis_c
+;
+FOR ::= For Parentesis_a SENTENCIA_FOR Parentesis_c Llave_a SENTENCIA Llave_c
+;
+
+SENTENCIA_FOR ::=
+    Identificador In Numero Conector Numero DECLARACION_FOR |
+    Identificador In Numero Conector Numero
+;
+
+
+
+DECLARACION_FOR ::= 
+    Identificador Igual Numero |
+    Identificador Igual Comillas Identificador Comillas
+;
